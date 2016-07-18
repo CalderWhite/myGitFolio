@@ -31,10 +31,10 @@ function getCode() {
     var code = url.substring(cp,url.length);
     code = code.replace(/code=/,"");
     if(code.search("=") > -1){
-      outputTag.textContent = "Error while retrieving code from url!"
+      outputTag.textContent = "Error while retrieving code from url!";
     }
     else{
-      outputTag.textContent = "Your code is:" + code
+      outputTag.textContent = "Your code is:<span class=\"code\">" + code + "</span>";
     }
   }
 }
