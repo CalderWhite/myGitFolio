@@ -35,9 +35,10 @@ function getCode() {
     }
     else{
       outputTag.textContent = "Your code is:";
-      codeSpan = document.createElement("span")
-      codeSpan.textContent = code
-      outputTag.appendChild(codeSpan)
+      codeSpan = document.createElement("span");
+      codeSpan.textContent = code;
+      codeSpan.className = "code";
+      outputTag.appendChild(codeSpan);
     }
   }
 }
