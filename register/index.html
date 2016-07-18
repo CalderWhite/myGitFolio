@@ -21,6 +21,9 @@ h1{
   font-family: ‘Lucida Console’, Monaco, monospace;
   color:black;
 }
+.wrapper {
+    text-align: center;
+}
       </style>
       <script>
 function getCode() {
@@ -51,9 +54,11 @@ function init(){
   </head>
   <body onload="getCode();init()">
     <h1 id="code">No code found!</h1>
-    <button class="cpbtn" data-clipboard-target="#myCode">
-      <img src="assets/clippy.svg" alt="Copy to clipboard">
-    </button>
+    <div class="wrapper">
+      <button class="cpbtn" data-clipboard-target="#myCode">
+        <img src="images/copyImg.png" alt="Copy to clipboard">
+      </button>
+    </div>
     <p class="msg">Please enter this code into the application terminal.</p>
   </body>
 </html>
