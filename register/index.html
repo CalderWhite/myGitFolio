@@ -38,14 +38,22 @@ function getCode() {
       codeSpan = document.createElement("span");
       codeSpan.textContent = code;
       codeSpan.className = "code";
+      codeSpan.id = "myCode";
       outputTag.appendChild(codeSpan);
     }
   }
 }
+function init(){
+  new Clipboard('.cpbtn');
+}
       </script>
+      <script src="dist/clipboard.min.js"></script>
   </head>
-  <body onload="getCode()">
+  <body onload="getCode();init()">
     <h1 id="code">No code found!</h1>
+    <button class="cpbtn" data-clipboard-target="#myCode">
+      <img src="assets/clippy.svg" alt="Copy to clipboard">
+    </button>
     <p class="msg">Please enter this code into the application terminal.</p>
   </body>
 </html>
