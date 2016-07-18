@@ -34,7 +34,10 @@ function getCode() {
       outputTag.textContent = "Error while retrieving code from url!";
     }
     else{
-      outputTag.textContent = "Your code is:<span class=\"code\">" + code + "</span>";
+      outputTag.textContent = "Your code is:";
+      codeSpan = document.createElement("span")
+      codeSpan.textContent = code
+      outputTag.append(codeSpan)
     }
   }
 }
