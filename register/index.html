@@ -14,7 +14,7 @@ function getCode() {
   var outputTag = document.getElementById("code");
   if(cp > -1){
     var code = url.substring(cp,url.length);
-    code = code.replace(/=/,"");
+    code = code.replace(/code=/,"");
     if(code.search("=") > -1){
       outputTag.textContent = "Error while retrieving code from url!"
     }
