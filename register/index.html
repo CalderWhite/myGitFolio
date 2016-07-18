@@ -1,12 +1,26 @@
 <html>
   <head>
       <title>myGitFolio - authCode</title>
+      <style>
+h1{
+  font-family: ‘Arial Black’, Gadget, sans-serif;
+  color: #333333;
+}
+      </style>
       <script>
 function getCode() {
-  var url = window.location.href
-  var cp = url.search("code=")
+  var url = window.location.href;
+  var cp = url.search("code=");
+  var outputTag = document.getElementById("code");
   if(cp > -1){
-    var code = url.substring(cp,url.length)
+    var code = url.substring(cp,url.length);
+    code = code.replace(/=/,"");
+    if(code.search("=") > -1){
+      outputTag.textContent = "Error while retrieving code from url!"
+    }
+    else{
+      outputTag.textContent = "Your code is:" + code
+    }
   }
 }
       </script>
