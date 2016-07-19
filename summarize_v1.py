@@ -7,7 +7,7 @@ def joinLines(arr,st,en):
     return res
 def summary(text):
     desc = "Error loading description."
-
+    
     if text == None or text == "":
         desc = "No description available."
     elif text.find("#") < 0:
@@ -54,9 +54,6 @@ def summary(text):
                     desc = j[0:130] + "..."
                 else:
                     desc = j
-        print("[\n" + text + "\n]")
-        print(jse)
-        print("--------------------")
     return desc
 if __name__ == '__main__':
     mySumm = summary("# Repo2\nThe second of my legendary github repositories!!!\n")
