@@ -28,12 +28,15 @@ def get_sorted_repos(token,order="date",private=True):
         raise Exception
     return repos
 
-def build_summary(repoUrl,token,repoJson):
+def build_summary(repoUrl,token,repoJson,auth=True):
     err = False
     try:
         global readme_req
         global readme
-        readme_req = request.urlopen(repoUrl + "/readme?access_token=" + token)
+        if auth:
+            readme_req = request.urlopen(repoUrl + "/readme?access_token=" + token)
+        else:
+            readme_req = request.urlopen(repoUrl + "/readme")
         readme = readme_req.read()
     except:
         print("ERROR: got code " + str(readme_req.getcode()))
@@ -62,10 +65,40 @@ def buildFile(ftype,oauth_token,myOrder="date",privateRepos=True):
     print("building summaries...")
     for i in repoList:
         x = build_summary(i["url"],oauth_token,i)
-        summaries.append([x,i["name"]])
+        summary_package = {
+            "name" : i["name"],
+            "fork" : i["fork"],
+            "summary" : x
+            }
+        summaries.append(summary_package)
         print("summary " + str(repoList.index(i)) + " is complete.")
     print(summaries)
+def custom_build(ftype,api_url,private,oauth_token=None):
+    if private:
+        if oauth_token == None:
+            raise Exception("The repository is private, but no oauth_token was provided.\n  Example for private repository: mySummary = builder.custom_build(<fileType>,<repository url for github api>,True,<oauth token (long hash)>")
+        else:
+            Rjson = request.urlopen(api_url + "?oauth_token=" + oauth_token).read().decode('utf-8')
+            Rjson = json.loads(Rjson)
+            summ = build_summary(api_url,oauth_token,Rjson,auth=True)
+            summary_package = {
+                "name" : Rjson["name"],
+                "fork" : Rjson["fork"],
+                "summary" : summ
+                }
+            return summary_package
+    else:
+        Rjson = request.urlopen(api_url).read().decode('utf-8')
+        Rjson = json.loads(Rjson)
+        summ = build_summary(api_url,oauth_token,Rjson,auth=False)
+        summary_package = {
+            "name" : Rjson["name"],
+            "fork" : Rjson["fork"],
+            "summary" : summ
+            }
+        return summary_package
 
+"""
 if __name__ == '__main__':
     print("authenticating....")
     r = open("userData.json",'r')
@@ -83,3 +116,8 @@ if __name__ == '__main__':
         w.close()
         print("--------------")
     buildFile("bruh",oauth_token)
+"""
+if __name__ == '__main__':
+    x = custom_build("bruh","https://api.github.com/repos/docker/docker",False)
+    print(x)
+
