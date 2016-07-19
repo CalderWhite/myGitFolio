@@ -33,8 +33,9 @@ def build_summary(repoUrl,token):
     readme = json.loads(readme.decode('utf-8'))
     b64encoded_contents = readme["content"]
     encoded_contents = base64.b64decode(b64encoded_contents)
-    encoded_contents = str(encoded_contents)[2:len(str(encoded_contents)) - 1]
-    summary = summarize_v1.summary(encoded_contents)
+    #encoded_contents = str(encoded_contents)[2:len(str(encoded_contents)) - 1]
+    decoded_contents = encoded_contents.decode('utf-8')
+    summary = summarize_v1.summary(decoded_contents)
     return summary
 def buildFile(ftype,oauth_token,myOrder="date",privateRepos=True):
     repoList = get_sorted_repos(oauth_token,order=myOrder,private=privateRepos)
