@@ -2,7 +2,6 @@ import urllib.request as request
 import json, base64
 def joinLines(arr,st,en):
     res = []
-
     for i in range(st,en):
         res.append(arr[i])
     res = "\n".join(res)
