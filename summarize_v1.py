@@ -7,7 +7,6 @@ def joinLines(arr,st,en):
     return res
 def summary(text):
     desc = "Error loading description."
-    
     if text == None or text == "":
         desc = "No description available."
     elif text.find("#") < 0:
@@ -49,12 +48,16 @@ def summary(text):
                 # I might impliment a better algorithm for this situation later.
                 pass
             else:
-                j = joinLines(rl,jse[0] + 1,jse[1] - 1)
+                if jse[0] + 1 == jse[1] - 1:
+                    j = rl[jse[0] + 1]
+                else:
+                    j = joinLines(rl,jse[0] + 1,jse[1] - 1)
+                # -----------
                 if len(j) > 130:
                     desc = j[0:130] + "..."
                 else:
                     desc = j
     return desc
 if __name__ == '__main__':
-    mySumm = summary("# Repo2\nThe second of my legendary github repositories!!!\n")
+    mySumm = summary(b"# ImgShare, now with Mobile!\nFree, easy image sharing using c9.io\n## About\nThis is a little server written in python that I wrote up in a day    \nthat allows you to upload images without any account, or fees.    \nThis server is made to run on [cloud 9](http://c9.io). This is a website    \nthat essentially allows you to remotely control an unbuntu machine.    \nAs a cherry on top, c9 gives you teporary hosting (domain name) for free.    \nThe idea of this project was quick, free and easy. However, c9 does have premium accounts (similar to github and other cloud platforms.)\n## Links\nMy c9 project : https://ide.c9.io/calderwhite/imgshare    \nWhen running, this is the upload domain: https://imgshare-calderwhite.c9users.io\n## Usage\n### Backend (Terminal)\nFrom the backend all there is to do is run the file.\n#### Execution\nTo run, enter the imgshare directory and then run:    \n`python3 c9Server.py`\n### Browser (Client)\nFrom a Browser you can upload, and view (download) images.\n#### Viewing\nIn order to view an image from a web page (when server running), here's how:    \n`https://imgshare-<username>.c9users.io/userData/userFiles/<user's ip>/<filename>`\n#### Uploading\nUploading is rather simple, just go to the base domain:    \n`https://imgshare-<username>/c9users.io`".decode('utf-8'))
     print(mySumm)
