@@ -82,10 +82,13 @@ def summary(markdown,repoJson):
                     else:
                         desc = TTags[0].text
     # now eliminate some descriptions we don't want
-    badDescs = ["-"]
+    badDescs = {
+        "-" : "No description available.",
+        "" : "No description available (got empty summary string)."
+        }
     for i in badDescs:
         if desc == i:
-            desc = "No description available."
+            desc = badDescs[i]
             break
     return desc
 
