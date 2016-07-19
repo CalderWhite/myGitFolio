@@ -1,4 +1,4 @@
-import ghAuth, json, base64, summarize_v1
+import ghAuth, json, base64, summarize_v1, sys
 import urllib.request as request
 
 def get_sorted_repos(token,order="date",private=True):
@@ -29,12 +29,30 @@ def get_sorted_repos(token,order="date",private=True):
     return repos
 
 def build_summary(repoUrl,token):
-    readme = request.urlopen(repoUrl + "/readme?access_token=" + token).read()
-    readme = json.loads(readme.decode('utf-8'))
-    b64encoded_contents = readme["content"]
-    encoded_contents = base64.b64decode(b64encoded_contents)
-    #encoded_contents = str(encoded_contents)[2:len(str(encoded_contents)) - 1]
-    decoded_contents = encoded_contents.decode('utf-8')
+    err = False
+    try:
+        global readme_req
+        global readme
+        readme_req = request.urlopen(repoUrl + "/readme?access_token=" + token)
+        readme = readme_req.read()
+    except:
+        print("ERROR: got code " + str(readme_req.getcode()))
+        # too lazy to check for other errors, or to make sure the object is in fact the correct one -_-
+        global err
+        err = True
+    if err == False:
+        readme = json.loads(readme.decode('utf-8'))
+    if readme.__contains__("message"):
+        if readme["message"] == "Not Found":
+            decoded_contents = None
+        else:
+            print("got weird message we requesting for readme.")
+            print("message\n[\n" + readme["message"] + "\n]")
+    else:
+        b64encoded_contents = readme["content"]
+        encoded_contents = base64.b64decode(b64encoded_contents)
+        #encoded_contents = str(encoded_contents)[2:len(str(encoded_contents)) - 1]
+        decoded_contents = encoded_contents.decode('utf-8')
     summary = summarize_v1.summary(decoded_contents)
     return summary
 def buildFile(ftype,oauth_token,myOrder="date",privateRepos=True):
@@ -63,5 +81,4 @@ if __name__ == '__main__':
         w.write(jstr)
         w.close()
         print("--------------")
-    print("building file...")
     buildFile("bruh",oauth_token)
