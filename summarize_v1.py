@@ -18,6 +18,9 @@ def summary(text):
     else:
         # don't just search for '#'s since it's less thorough
         rl = text.split("\n")
+        if rl[-1] == "":
+            rl.pop(-1)
+        # get rid of the empty list item created by newline @ end of file
         jse = []
         for i in rl:
             if i != "":
@@ -29,7 +32,10 @@ def summary(text):
             if jse[0] != 0:
                 j = joinLines(rl,0,jse[0])
             else:
-                j = joinLines(rl,1,len(jse) + 1)
+                if len(rl) == 2:
+                    j = rl[1]
+                else:
+                    j = joinLines(rl,1,len(jse))
             if len(j) > 130:
                 desc = j[0:130] + "..."
             else:
@@ -43,11 +49,14 @@ def summary(text):
                 # I might impliment a better algorithm for this situation later.
                 pass
             else:
-                j = joinLines(rl,jse[0],jse[1] - 1)
+                j = joinLines(rl,jse[0] + 1,jse[1] - 1)
                 if len(j) > 130:
                     desc = j[0:130] + "..."
                 else:
                     desc = j
+        print("[\n" + text + "\n]")
+        print(jse)
+        print("--------------------")
     return desc
 if __name__ == '__main__':
     mySumm = summary("# Repo2\nThe second of my legendary github repositories!!!\n")
