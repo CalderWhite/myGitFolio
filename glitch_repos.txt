@@ -1,0 +1,2 @@
+https://api.github.com/repos/AHAAAAAAA/PokemonGo-Map
+  returns empty string (using summarizer_v2)
