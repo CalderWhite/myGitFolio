@@ -1,4 +1,4 @@
-import ghAuth, json, base64, summarize_v1, sys
+import ghAuth, json, base64, summarize_v2, sys
 import urllib.request as request
 
 def get_sorted_repos(token,order="date",private=True):
@@ -28,7 +28,7 @@ def get_sorted_repos(token,order="date",private=True):
         raise Exception
     return repos
 
-def build_summary(repoUrl,token):
+def build_summary(repoUrl,token,repoJson):
     err = False
     try:
         global readme_req
@@ -40,20 +40,20 @@ def build_summary(repoUrl,token):
         # too lazy to check for other errors, or to make sure the object is in fact the correct one -_-
         global err
         err = True
-    if err == False:
-        readme = json.loads(readme.decode('utf-8'))
-    if readme.__contains__("message"):
-        if readme["message"] == "Not Found":
-            decoded_contents = None
-        else:
-            print("got weird message we requesting for readme.")
-            print("message\n[\n" + readme["message"] + "\n]")
+    if err:
+        decoded_contents = None
     else:
-        b64encoded_contents = readme["content"]
-        encoded_contents = base64.b64decode(b64encoded_contents)
-        #encoded_contents = str(encoded_contents)[2:len(str(encoded_contents)) - 1]
-        decoded_contents = encoded_contents.decode('utf-8')
-    summary = summarize_v1.summary(decoded_contents)
+        readme = json.loads(readme.decode('utf-8'))
+        ending = readme["name"].split(".")[-1]
+        if ending.lower() != "md":
+            decoded_contents = False
+            print("ERROR: bad file type: " + ending)
+        else:
+            b64encoded_contents = readme["content"]
+            encoded_contents = base64.b64decode(b64encoded_contents)
+            #encoded_contents = str(encoded_contents)[2:len(str(encoded_contents)) - 1]
+            decoded_contents = encoded_contents.decode('utf-8')
+    summary = summarize_v2.summary(decoded_contents,repoJson)
     return summary
 def buildFile(ftype,oauth_token,myOrder="date",privateRepos=True):
     print("retrieving repositories...")
@@ -61,9 +61,10 @@ def buildFile(ftype,oauth_token,myOrder="date",privateRepos=True):
     summaries = []
     print("building summaries...")
     for i in repoList:
-        x = build_summary(i["url"],oauth_token)
-        summaries.append(x)
+        x = build_summary(i["url"],oauth_token,i)
+        summaries.append([x,i["name"]])
         print("summary " + str(repoList.index(i)) + " is complete.")
+    print(summaries)
 
 if __name__ == '__main__':
     print("authenticating....")
