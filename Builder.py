@@ -38,14 +38,17 @@ def build_summary(repoUrl,token):
     summary = summarize_v1.summary(decoded_contents)
     return summary
 def buildFile(ftype,oauth_token,myOrder="date",privateRepos=True):
+    print("retrieving repositories...")
     repoList = get_sorted_repos(oauth_token,order=myOrder,private=privateRepos)
     summaries = []
+    print("building summaries...")
     for i in repoList:
         x = build_summary(i["url"],oauth_token)
         summaries.append(x)
-    print(summaries)
+        print("summary " + str(repoList.index(i)) + " is complete.")
 
 if __name__ == '__main__':
+    print("authenticating....")
     r = open("userData.json",'r')
     rj = json.loads(r.read())
     r.close()
@@ -60,4 +63,5 @@ if __name__ == '__main__':
         w.write(jstr)
         w.close()
         print("--------------")
+    print("building file...")
     buildFile("bruh",oauth_token)
