@@ -39,7 +39,7 @@ def build_summary(repoUrl,token,repoJson,auth=True):
             readme_req = request.urlopen(repoUrl + "/readme")
         readme = readme_req.read()
     except:
-        print("ERROR: got code " + str(readme_req.getcode()))
+        print("ERROR: got bad http code")
         # too lazy to check for other errors, or to make sure the object is in fact the correct one -_-
         global err
         err = True
@@ -73,7 +73,7 @@ def buildFile(ftype,oauth_token,myOrder="date",privateRepos=True):
         summaries.append(summary_package)
         print("summary " + str(repoList.index(i)) + " is complete.")
     print(summaries)
-def custom_build(ftype,api_url,private,oauth_token=None):
+def custom_build(api_url,private,oauth_token=None):
     if private:
         if oauth_token == None:
             raise Exception("The repository is private, but no oauth_token was provided.\n  Example for private repository: mySummary = builder.custom_build(<fileType>,<repository url for github api>,True,<oauth token (long hash)>")
@@ -97,6 +97,22 @@ def custom_build(ftype,api_url,private,oauth_token=None):
             "summary" : summ
             }
         return summary_package
+def custom_group_build(name):
+    # this function works for orginizations and users
+    # remember, capital letters matter in the name!
+    api_url = "https://api.github.com/users/" + name + "/repos"
+    repos = request.urlopen(api_url).read().decode('utf-8')
+    Jrepos = json.loads(repos)
+    summs = []
+    for i in Jrepos:
+        summ = build_summary(i["url"],None,i,auth=False)
+        summary_package = {
+            "name" : i["name"],
+            "fork" : i["fork"],
+            "summary" : summ
+            }
+        summs.append(summary_package)
+    return summs
 
 """
 if __name__ == '__main__':
@@ -118,6 +134,6 @@ if __name__ == '__main__':
     buildFile("bruh",oauth_token)
 """
 if __name__ == '__main__':
-    x = custom_build("bruh","https://api.github.com/repos/docker/docker",False)
+    x = custom_group_build("darinwhite")
     print(x)
 
