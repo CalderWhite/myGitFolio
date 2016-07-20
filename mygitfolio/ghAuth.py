@@ -1,9 +1,13 @@
 import urllib.request as request
 import json
 
-def getAuth():
-    print("Go to:\n\
-    https://github.com/login/oauth/authorize?client_id=d518f1ee3b1cc76de248&redirect_uri=https://calderwhite.github.io/myGitFolio/register&scope=repo")
+def getAuth(useBrowser=False):
+    if useBrowser:
+        import webbrowser
+        webbrowser.open("https://github.com/login/oauth/authorize?client_id=d518f1ee3b1cc76de248&redirect_uri=https://calderwhite.github.io/myGitFolio/register&scope=repo")
+    else:
+        print("Go to:\n\
+        https://github.com/login/oauth/authorize?client_id=d518f1ee3b1cc76de248&redirect_uri=https://calderwhite.github.io/myGitFolio/register&scope=repo")
     code = input("enter code here:")
     
     auth_url = "https://github.com/login/oauth/access_token?client_id=d518f1ee3b1cc76de248&client_secret=91c59f92eb70efe00c40094ae71366dbf12ec77d&code=" + code
