@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>myGitFolio - Home</title>
+        <link rel="icon icon" href="favicon.ico?v=5"/>
+        <link rel="stylesheet" href="stylesheet.css"/>
+        <script>
+var toggle = {
+    status : false
+};
+function boot(){
+    window.setInterval(function(){
+        console.log("run");
+        if(toggle.status === false){
+		    //document.getElementById("openingLogo").style.boxShadow = "0 0 10px #888888";
+            document.getElementById("openingLogo").style.transform = "scale(1.1,1.1)";
+            toggle.status = true;
+        }
+        else{
+		    //document.getElementById("openingLogo").style.boxShadow = "0 0 5px #888888";
+            document.getElementById("openingLogo").style.transform = "scale(0.9,0.9)";
+            toggle.status = false;
+        }
+    },1500);
+}
+        </script>
+    </head>
+    <body onload="boot()">
+        <table class="topBar">
+            <tbody>
+                <tr>
+                    <td class="bartd" id="https://github.com/CalderWhite/myGitFolio/" onclick="window.location = this.id"><a>GitHub</a></td>
+                    <td class="bartd" id="https://github.com/CalderWhite/myGitFolio/" onclick="window.location = this.id"><a>Python Package</a></td>
+                    <td class="bartd" id="https://github.com/CalderWhite/myGitFolio/archive/master.zip" onclick="window.location = this.id"><a>Download source</a></td>
+                    <td class="bartd" id="#" onclick="window.location = this.id"><a>filler</a></td>
+                    <td class="bartd" id="https://calderwhite.github.io/myGitFolio/register" onclick="window.location = this.id">
+                        <a>
+                            <img width="48" src="images/GitHub-Mark-64px.png"/>
+                            <br/>
+                            signup
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="centerContent">
+            <h1 id="headTitle">myGitFolio</h1>
+            <img id="openingLogo" src="images/myGitFolio_Logo_new.png"/>
+            <pre class="desc">
+Some of the greatest development work is done in open source, and you should get credit for it.
+But when you apply for a job, and you want to list some projects you've worked on, it's suboptimal to just
+give the employer your github link. Thus, a solution was born : <strong>myGitFolio</strong>.
+myGitFolio is a incredibly customizable resource that will gather
+all of your GitHub repositories, order them in a way you want and 
+place them all in a file, with a concise description of the project.
+            </pre>
+            <h2>and the best part...</h2>
+            <pre class="desc">
+myGitFolio is open source! You can see how it's done, and even fork off your own version.
+If you spot a flaw, you can fix it and merge back! This way there are no worries about what we do with your data,
+you already know! So what are you waiting for? <a class="textLink" href="https://github.com/CalderWhite/myGitFolio/">Let's see what you do!</a>
+            </pre>
+        </div>
+    </body>
+</html>

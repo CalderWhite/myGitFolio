@@ -1,0 +1,75 @@
+body{
+    margin:0px;
+    padding:0px;
+}
+table{
+    width:100%;
+}
+tbody, tr, table{
+    padding:0px;
+}
+td{
+    text-align: center;
+    width:150px;
+    padding:3px;
+    -moz-transition: all .1s ease-in;
+    -o-transition: all .1s ease-in;
+    -webkit-transition: all .1s ease-in;
+    transition: all .1s ease-in;
+    font-family: Verdana;
+    text-decoration: none;
+    color:black;
+}
+.bartd{
+    cursor: pointer;
+}
+.bartd:hover{
+    background-color: #00cccc;
+}
+.topBar{
+    position: fixed;
+    background-color: #00ffff;
+    padding:0px;
+    z-index:10;
+}
+a{
+    font-family: Verdana;
+    text-decoration: none;
+    color:black;
+}
+h1{
+    font-size: 42;
+}
+#opening{
+    position: relative;
+}
+.centerContent{
+    position:relative;
+    text-align: center;
+    display:block;
+    top:90px;
+    /*
+    to be seen at the start, it has to be pushed down, past the .topBar
+    so i just grabbed the width of .topBar, added a few pixles to it and left it.
+    basically lazy css
+    */
+}
+#headTitle{
+    padding:0px;
+    margin:0px;
+    margin-bottom: 20px;
+    position: relative;
+}
+#openingLogo{
+    transition: all 2s ease 0s;
+}
+.desc, h2, h1{
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+.textLink{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    color: #4078c0;
+}
+.textLink:hover{
+    text-decoration: underline;
+}
