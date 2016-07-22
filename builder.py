@@ -1,8 +1,8 @@
 import json, base64, sys, os
 sys.path.append(os.getcwd() + "ghAuth.py")
 sys.path.append(os.getcwd() + "summarize_v2.py")
-from mygitfolio import ghAuth
-from mygitfolio import summarize_v2
+from gitfolio import ghAuth
+from gitfolio import summarize_v2
 import urllib.request as request
 
 def get_sorted_repos(token,order="date",private=True):
@@ -125,7 +125,15 @@ def custom_group_build(name,oauth_token=None):
         print("repo " + str(Jrepos.index(i) + 1) + "/" + str(len(Jrepos)) + " is done.")
     return summs
 def build_auth(useWebBrowser=False):
-    r = open("userData.json",'r')
+    if os.path.exists(os.getcwd() + "userData.json"):
+        r = open("userData.json",'r')
+    else:
+        r = open("userData.json",'a')
+        r.close()
+        w = open("userData.json",'w')
+        w.write("{}")
+        w.close()
+        r = open("userData.json",'r')
     rj = json.loads(r.read())
     r.close()
     if rj.__contains__("oauth_token"):

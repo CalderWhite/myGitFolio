@@ -67,3 +67,4 @@ if __name__ == '__main__':
     #myBytes = request.urlopen("https://raw.githubusercontent.com/harthur/brain/master/README.md").read().decode('utf-8')
     #mySumm = summary(myBytes)
     #print(mySumm)
+    pass

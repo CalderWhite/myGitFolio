@@ -1,4 +1,4 @@
-from mygitfolio import builder
+from gitfolio import builder
 import sys, os, json
 def gitfolio(cmds,dash,ddash):
     """main file\n--help for help"""
