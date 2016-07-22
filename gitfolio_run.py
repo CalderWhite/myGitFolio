@@ -2,6 +2,10 @@ from gitfolio import builder
 import sys, os, json
 def gitfolio(cmds,dash,ddash):
     """main file\n--help for help"""
+    sys.path.append(os.getcwd() + "gitfolio.py")
+    from gitfolio import gitfolio_run as funcs
+    from gitfolio import gitfolio_run as funcCalls
+    funcs = dir(funcs)
     if len(ddash) > 0:
         if ddash[0] == "--help":
             funcs.pop(funcs.index("check_commands"))
@@ -95,10 +99,6 @@ def check_commands(args):
     except NameError:
         raise Exception("No such command as " + commands[0])
 if __name__ == '__main__':
-    sys.path.append(os.getcwd() + "gitfolio.py")
-    import gitfolio as funcs
-    import gitfolio as funcCalls
-    funcs = dir(funcs)
     args = [sys.argv[0].split(".")[0]]
     for i in sys.argv[1:]:
         args.append(i)
