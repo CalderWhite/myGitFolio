@@ -62,7 +62,7 @@ def build_summary(repoUrl,token,repoJson,auth=True):
             decoded_contents = encoded_contents.decode('utf-8')
     summary = summarize_v2.summary(decoded_contents,repoJson)
     return summary
-def buildFile(ftype,oauth_token,myOrder="date",privateRepos=True):
+def build(oauth_token,myOrder="date",privateRepos=True):
     print("retrieving repositories...")
     repoList = get_sorted_repos(oauth_token,order=myOrder,private=privateRepos)
     summaries = []
@@ -75,7 +75,7 @@ def buildFile(ftype,oauth_token,myOrder="date",privateRepos=True):
             "summary" : x
             }
         summaries.append(summary_package)
-        print("summary " + str(repoList.index(i) + 1) + "/" + str(len(Jrepos)) + " is complete.")
+        print("summary " + str(repoList.index(i) + 1) + "/" + str(len(repoList)) + " is complete.")
     print(summaries)
 def custom_build(api_url,private,oauth_token=None):
     if private:
@@ -101,15 +101,21 @@ def custom_build(api_url,private,oauth_token=None):
             "summary" : summ
             }
         return summary_package
-def custom_group_build(name):
+def custom_group_build(name,oauth_token=None):
     # this function works for orginizations and users
     # remember, capital letters matter in the name!
-    api_url = "https://api.github.com/users/" + name + "/repos"
+    if oauth_token != None:
+        api_url = "https://api.github.com/users/" + name + "/repos?oauth_token=" + oauth_token + "&visibility=all"
+    else:
+        api_url = "https://api.github.com/users/" + name + "/repos"
     repos = request.urlopen(api_url).read().decode('utf-8')
     Jrepos = json.loads(repos)
     summs = []
     for i in Jrepos:
-        summ = build_summary(i["url"],None,i,auth=False)
+        if oauth_token != None:
+            summ = build_summary(i["url"],oauth_token,i,auth=True)
+        else:
+            summ = build_summary(i["url"],None,i,auth=False)
         summary_package = {
             "name" : i["name"],
             "fork" : i["fork"],
@@ -134,7 +140,7 @@ def build_auth(useWebBrowser=False):
         w.write(jstr)
         w.close()
         print("--------------")
-"""
+
 if __name__ == '__main__':
     print("authenticating....")
     r = open("userData.json",'r')
@@ -151,9 +157,5 @@ if __name__ == '__main__':
         w.write(jstr)
         w.close()
         print("--------------")
-    buildFile("bruh",oauth_token)
-"""
-if __name__ == '__main__':
-    x = custom_group_build("darinwhite")
-    print(x)
+    buildFile(oauth_token)
 
