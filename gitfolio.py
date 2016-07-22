@@ -94,7 +94,6 @@ def check_commands(args):
         eval(commands[0] + "(" + str(commands[1:]) + "," + str(options1) + "," + str(options2) + ")")
     except NameError:
         raise Exception("No such command as " + commands[0])
-"""
 if __name__ == '__main__':
     sys.path.append(os.getcwd() + "gitfolio.py")
     import gitfolio as funcs
@@ -104,6 +103,3 @@ if __name__ == '__main__':
     for i in sys.argv[1:]:
         args.append(i)
     check_commands(args)
-"""
-if __name__ == '__main__':
-    auto_build_package([],[],[])
