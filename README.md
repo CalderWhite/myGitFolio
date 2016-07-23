@@ -3,6 +3,9 @@
 Gather all your GitHub repositories, and a small descripton of them into one file, and then send it off.
 ## Installation
 `pip install gitfolio`
+## Warning
+For usage, always use the pypi version of this software (`pip install gitfolio`).    
+It is unclear, but the pypi version has been tested and has bug fixes that this repository doesn't have
 ## Note:
 The python-package version of this software is different than the developement version (master branch of this repo)    
 mostly for import reasons. So if you add a feature, when you merge to master it's fine, but when you merge to    
